@@ -1,0 +1,19 @@
+version: '2'
+services:
+    moviemanager-app:
+        image: moviemanager
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATASOURCE_URL=jdbc:mysql://moviemanager-mysql:3306/moviemanager?useUnicode=true&characterEncoding=utf8&useSSL=false
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+            - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=moviemanager-elasticsearch:9300
+        ports:
+            - 8080:8080
+    moviemanager-mysql:
+        extends:
+            file: mysql.yml
+            service: moviemanager-mysql
+    moviemanager-elasticsearch:
+        extends:
+            file: elasticsearch.yml
+            service: moviemanager-elasticsearch
