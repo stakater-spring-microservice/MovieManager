@@ -1,0 +1,26 @@
+/** entity */
+entity Movie {
+	/** business id */
+	id Long required,
+    title String required,
+    released Long required,
+    url String required
+}
+
+/** entity */
+entity Genre {
+	/** business id */
+	id Long required,
+    name String required
+}
+
+relationship ManyToMany {
+  Movie{genre} to Genre{movie}
+}
+
+// Set pagination options
+paginate * with infinite-scroll
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
