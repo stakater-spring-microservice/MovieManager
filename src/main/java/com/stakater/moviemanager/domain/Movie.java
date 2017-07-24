@@ -43,8 +43,8 @@ public class Movie implements Serializable {
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "movie_genre",
-               joinColumns = @JoinColumn(name="movies_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="genres_id", referencedColumnName="id"))
+               joinColumns = @JoinColumn(name="movie_id", referencedColumnName="id"),
+               inverseJoinColumns = @JoinColumn(name="genre_id", referencedColumnName="id"))
     private Set<Genre> genres = new HashSet<>();
 
     public Long getId() {

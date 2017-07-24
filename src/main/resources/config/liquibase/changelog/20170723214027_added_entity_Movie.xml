@@ -38,15 +38,15 @@
         </createTable>
 
         <createTable tableName="movie_genre">
-            <column name="genres_id" type="bigint">
+            <column name="genre_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
-            <column name="movies_id" type="bigint">
+            <column name="movie_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
         </createTable>
 
-        <addPrimaryKey columnNames="movies_id, genres_id" tableName="movie_genre"/>
+        <addPrimaryKey columnNames="movie_id, genre_id" tableName="movie_genre"/>
 
         <loadData encoding="UTF-8"
                   file="config/liquibase/movies.csv"
