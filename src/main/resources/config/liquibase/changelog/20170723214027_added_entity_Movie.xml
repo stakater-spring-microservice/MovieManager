@@ -36,7 +36,7 @@
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        
+
         <createTable tableName="movie_genre">
             <column name="genres_id" type="bigint">
                 <constraints nullable="false"/>
@@ -47,6 +47,11 @@
         </createTable>
 
         <addPrimaryKey columnNames="movies_id, genres_id" tableName="movie_genre"/>
-        
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/movies.csv"
+                  separator=","
+                  tableName="movie"/>
+
     </changeSet>
 </databaseChangeLog>

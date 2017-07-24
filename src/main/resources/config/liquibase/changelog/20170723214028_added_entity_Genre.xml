@@ -28,6 +28,16 @@
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/genres.csv"
+                  separator=","
+                  tableName="genre"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/movies_genres.csv"
+                  separator=","
+                  tableName="movie_genre"/>
+
     </changeSet>
 </databaseChangeLog>
