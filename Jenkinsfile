@@ -34,7 +34,7 @@ mavenNode(mavenImage: 'openjdk:8') {
         checkout scm
     }
 
-    container(name: 'maven') {
+    container(name: 'maven').inside('-u root -e MAVEN_OPTS="-Duser.home=./"') {
         stage('check java') {
             sh "java -version"
         }
