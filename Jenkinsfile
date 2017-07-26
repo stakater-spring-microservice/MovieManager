@@ -1,5 +1,5 @@
 #!/usr/bin/env groovy
-@Library('github.com/stakater/fabric8-pipeline-library@v2.2.335-stakater')
+@Library('github.com/fabric8io/fabric8-pipeline-library@v2.2.335')
 
 def localItestPattern = ""
 try {
@@ -34,7 +34,7 @@ mavenNode(mavenImage: 'openjdk:8') {
         checkout scm
     }
 
-    container(name: 'maven').inside('-u root -e MAVEN_OPTS="-Duser.home=./"') {
+    container(name: 'maven') {
         stage('check java') {
             sh "java -version"
         }
