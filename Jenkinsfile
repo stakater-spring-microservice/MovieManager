@@ -28,17 +28,16 @@ def fabric8Console = "${env.FABRIC8_CONSOLE ?: ''}"
 def utils = new io.fabric8.Utils()
 def label = "buildpod.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').replace('/', '_')
 
-mavenNode(mavenImage: 'openjdk:8') {
-
+node {
     stage('checkout') {
         checkout scm
     }
 
-    container(name: 'maven') {
+    docker.image('openjdk:8').inside('-u root -e MAVEN_OPTS="-Duser.home=./"') {
         stage('check java') {
             sh "java -version"
         }
-        
+
         stage('clean') {
             sh "chmod +x mvnw"
             sh "./mvnw clean"
@@ -51,8 +50,51 @@ mavenNode(mavenImage: 'openjdk:8') {
         stage('yarn install') {
             sh "./mvnw com.github.eirslett:frontend-maven-plugin:yarn"
         }
+
+        stage('backend tests') {
+            try {
+                sh "./mvnw test"
+            } catch(err) {
+                throw err
+            } finally {
+                junit '**/target/surefire-reports/TEST-*.xml'
+            }
+        }
+
+        stage('frontend tests') {
+            try {
+                sh "./mvnw com.github.eirslett:frontend-maven-plugin:yarn -Dfrontend.yarn.arguments=test"
+            } catch(err) {
+                throw err
+            } finally {
+                junit '**/target/test-results/karma/TESTS-*.xml'
+            }
+        }
+
+        stage('packaging') {
+            sh "./mvnw package -Pprod -DskipTests"
+            archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
+        }
+
+        stage('quality analysis') {
+            withSonarQubeEnv('Sonar') {
+                sh "./mvnw sonar:sonar"
+            }
+        }
     }
 
+    def dockerImage
+    stage('build docker') {
+        sh "cp -R src/main/docker target/"
+        sh "cp target/*.war target/docker/"
+        dockerImage = docker.build('moviemanager', 'target/docker')
+    }
 
+    stage('publish docker') {
+        docker.withRegistry('https://registry.hub.docker.com', 'docker-login') {
+            dockerImage.push 'latest'
+        }
+    }
 }
+
 
