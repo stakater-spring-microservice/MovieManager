@@ -1,5 +1,5 @@
 #!/usr/bin/env groovy
-@Library('github.com/stakater/fabric8-pipeline-library')
+@Library('github.com/fabric8io/fabric8-pipeline-library@master')
 
 def localItestPattern = ""
 try {
@@ -28,10 +28,8 @@ def fabric8Console = "${env.FABRIC8_CONSOLE ?: ''}"
 def utils = new io.fabric8.Utils()
 def label = "buildpod.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').replace('/', '_')
 
-mavenNode(mavenImage: 'openjdk:8') {
-    container(name: 'openjdk8') {
-        sh 'java -version'
+mavenNode(mavenImage: 'maven:3.3.9-jdk-7') {
+    container(name: 'maven') {
+        sh 'mvn clean install'
     }
 }
-
-
