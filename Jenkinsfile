@@ -43,7 +43,7 @@ mavenNode(mavenImage: 'openjdk:8') {
         stage('yarn install') {
             sh './mvnw com.github.eirslett:frontend-maven-plugin:yarn'
         }
-        
+
         stage('backend tests') {
             try {
                 sh "./mvnw test"
