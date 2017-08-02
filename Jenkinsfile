@@ -30,7 +30,6 @@ def label = "buildpod.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').rep
 
 mavenNode(mavenImage: 'openjdk:8') {
     container(name: 'openjdk8') {
-        checkout scm
         sh 'java -version'
     }
 }
