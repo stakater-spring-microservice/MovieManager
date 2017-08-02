@@ -28,7 +28,7 @@ def fabric8Console = "${env.FABRIC8_CONSOLE ?: ''}"
 def utils = new io.fabric8.Utils()
 def label = "buildpod.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').replace('/', '_')
 
-mavenNode(mavenImage: 'maven:3.3.9-jdk-7') {
+mavenNode(mavenImage: 'openjdk:8') {
     container(name: 'maven') {
         stage("checkout") {
             checkout scm
