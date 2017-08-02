@@ -47,7 +47,6 @@ dockerNode(dockerImage: 'openjdk:8') {
     }
 
     stage('yarn install') {
-        sh "apt-get -qq update && apt-get -qq -y install bzip2"
         sh "./mvnw com.github.eirslett:frontend-maven-plugin:yarn"
     }
 
