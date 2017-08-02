@@ -5,4 +5,5 @@
 - [ ] create customer dockerfile; and k8s manifests
 - [ ] configs?
 - [ ] secrets?
-- 
+- [ ] run with embedded db
+- [ ] run with mysql
