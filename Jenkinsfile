@@ -30,7 +30,11 @@ def label = "buildpod.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').rep
 
 mavenNode(mavenImage: 'maven:3.3.9-jdk-7') {
     container(name: 'maven') {
-        checkout scm
-        sh 'mvn clean install'
+        stage("checkout") {
+            checkout scm
+        }
+        stage("clean-install") {
+            sh 'mvn clean install'
+        }
     }
 }
