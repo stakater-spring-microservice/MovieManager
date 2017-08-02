@@ -28,10 +28,11 @@ def fabric8Console = "${env.FABRIC8_CONSOLE ?: ''}"
 def utils = new io.fabric8.Utils()
 def label = "buildpod.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').replace('/', '_')
 
-dockerNode(dockerImage: 'openjdk:8') {
+mavenNode(mavenImage: 'openjdk:8') {
     container(name: 'openjdk8') {
         stage('checkout') {
             checkout scm
+            sh 'java -version'
         }
 
         stage('check java') {
