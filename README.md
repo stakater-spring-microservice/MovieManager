@@ -173,3 +173,13 @@ To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`)
 [Protractor]: https://angular.github.io/protractor/
 [Leaflet]: http://leafletjs.com/
 [DefinitelyTyped]: http://definitelytyped.org/
+
+---
+
+
+This will add your current directory as a volume to the container, set the working directory to the volume, and exec 
+you into the container
+
+docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app -it openjdk:8 /bin/bash
+
+---
