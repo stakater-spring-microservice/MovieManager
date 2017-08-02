@@ -35,7 +35,6 @@ dockerNode(dockerImage: 'openjdk:8') {
         }
 
         stage('check java') {
-            sh "uname -a"
             sh "java -version"
         }
 
