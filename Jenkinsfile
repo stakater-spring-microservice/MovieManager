@@ -33,8 +33,9 @@ mavenNode(mavenImage: 'openjdk:8') {
         stage("checkout") {
             checkout scm
         }
-        stage("clean-install") {
-            sh 'mvn clean install'
+        stage("clean") {
+            sh 'chmod +x mvnw'
+            sh './mvnw clean install'
         }
     }
 }
