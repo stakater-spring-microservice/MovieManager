@@ -68,5 +68,9 @@ mavenNode(mavenImage: 'openjdk:8') {
             sh "./mvnw package -Pprod -DskipTests"
             archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
         }
+
+        stage('fabric8-build') {
+            sh './mvnw package fabric8:build'
+        }
     }
 }

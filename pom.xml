@@ -686,6 +686,8 @@
                     </resources>
                 </configuration>
             </plugin>
+            <!-- 	The fabric8-maven-plugin enables the automatic generation of a Docker image and Kubernetes /
+            OpenShift descriptors including this Spring application. -->
             <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>fabric8-maven-plugin</artifactId>
