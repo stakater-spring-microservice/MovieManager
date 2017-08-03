@@ -399,8 +399,38 @@
             <version>${cucumber.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- fabric8 -->
+        <dependency>
+            <groupId>io.fabric8</groupId>
+            <artifactId>fabric8-arquillian</artifactId>
+            <scope>test</scope>
+        </dependency>
         <!-- jhipster-needle-maven-add-dependency -->
     </dependencies>
+
+    <!--
+    In the parent POM, the main difference between the <dependencies> and <dependencyManagement> is this:
+
+    Artifacts specified in the <dependencies> section will ALWAYS be included as a dependency of the child module(s).
+
+    Artifacts specified in the <dependencyManagement> section, will only be included in the child module if they were
+    also specified in the <dependencies> section of the child module itself. Why is it good you ask? because you
+    specify the version and/or scope in the parent, and you can leave them out when specifying the dependencies in
+    the child POM. This can help you use unified versions for dependencies for child modules, without specifying the
+    version in each child module.
+    -->
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.fabric8</groupId>
+                <artifactId>fabric8-arquillian</artifactId>
+                <version>2.2.192</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <build>
         <defaultGoal>spring-boot:run</defaultGoal>
         <testResources>
@@ -655,6 +685,21 @@
                         </resource>
                     </resources>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>fabric8-maven-plugin</artifactId>
+                <version>3.2.9</version>
+                <executions>
+                    <execution>
+                        <id>fmp</id>
+                        <goals>
+                            <goal>resource</goal>
+                            <goal>helm</goal>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <!-- jhipster-needle-maven-add-plugin -->
         </plugins>
@@ -984,18 +1029,6 @@
         </profile>
         <profile>
             <!--
-                Profile for monitoring the application with Graphite.
-            -->
-            <id>graphite</id>
-            <dependencies>
-                <dependency>
-                    <groupId>io.dropwizard.metrics</groupId>
-                    <artifactId>metrics-graphite</artifactId>
-                </dependency>
-            </dependencies>
-        </profile>
-        <profile>
-            <!--
                 Profile for monitoring the application with Prometheus.
             -->
             <id>prometheus</id>
@@ -1031,6 +1064,25 @@
                     <version>${mapstruct.version}</version>
                 </dependency>
             </dependencies>
+        </profile>
+
+        <!-- kubernetes integration test -->
+        <profile>
+            <id>kit</id>
+            <activation />
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>2.19</version>
+                        <configuration>
+                            <includes>
+                                <include>**/*KT.*</include>
+                            </includes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 </project>
