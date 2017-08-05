@@ -93,6 +93,15 @@
         <springfox.version>2.7.0</springfox.version>
         <validation-api.version>1.1.0.Final</validation-api.version>
         <yarn.version>v0.27.5</yarn.version>
+
+        <!-- maven plugin versions -->
+        <fabric8.maven.plugin.version>3.5.22</fabric8.maven.plugin.version>
+        <exec-maven-plugin.version>1.5.0</exec-maven-plugin.version>
+        <maven-shade-plugin.version>2.3</maven-shade-plugin.version>
+        <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
+
+        <!-- dependency versions -->
+        <fabric8.version>2.3.2</fabric8.version>
     </properties>
 
 
@@ -422,6 +431,21 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- import fabric8 platform bom first -->
+            <dependency>
+                <groupId>io.fabric8</groupId>
+                <artifactId>fabric8-project-bom-with-platform-deps</artifactId>
+                <version>${fabric8.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <dependency>
                 <groupId>io.fabric8</groupId>
                 <artifactId>fabric8-arquillian</artifactId>
@@ -558,6 +582,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>default-test</id>
@@ -699,7 +724,7 @@
             <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>fabric8-maven-plugin</artifactId>
-                <version>3.2.9</version>
+                <version>3.5.22</version>
                 <executions>
                     <execution>
                         <id>fmp</id>
