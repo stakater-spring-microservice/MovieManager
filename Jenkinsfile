@@ -32,6 +32,9 @@ def envProd = utils.environmentNamespace('run')
 def stashName = ""
 def deploy = false
 
+// TODO # 1 : use different profile dev or prod
+// TODO # 2 : use config maps
+
 mavenNode(mavenImage: 'openjdk:8') {
     container(name: 'maven') {
 
@@ -68,6 +71,7 @@ mavenNode(mavenImage: 'openjdk:8') {
             } catch(err) {
                 throw err
             } finally {
+                // TODO: what does junit command do?
                 junit '**/target/test-results/karma/TESTS-*.xml'
             }
         }
@@ -93,6 +97,15 @@ mavenNode(mavenImage: 'openjdk:8') {
               failIfNoTests = localFailIfNoTests
               itestPattern = localItestPattern
             }
+        }
+
+        stage('Rollout to Stage') {
+            kubernetesApply(environment: envStage)
+            // TODO: figure out why to stash deployments?
+            // TODO: from where does the stash command comes?
+            //stash deployments
+            stashName = label
+            stash includes: '**/*.yml', name: stashName
         }
     }
 }
