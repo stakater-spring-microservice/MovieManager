@@ -34,6 +34,9 @@ def deploy = false
 
 // TODO # 1 : use different profile dev or prod
 // TODO # 2 : use config maps
+// TODO # 3 : the code is being checked out multiple times; that should be fixed! must be checked out only once
+// TODO # 4 : run performance tests ( gatling ) and save stats
+// TODO # 5 : the artifacts should be archived & should be browse'able from Jenkins!
 
 mavenNode(mavenImage: 'openjdk:8') {
     container(name: 'maven') {
@@ -53,36 +56,6 @@ mavenNode(mavenImage: 'openjdk:8') {
 
         stage('yarn install') {
             sh './mvnw com.github.eirslett:frontend-maven-plugin:yarn'
-        }
-
-        stage('backend tests') {
-            try {
-                sh "./mvnw test"
-            } catch(err) {
-                throw err
-            } finally {
-                junit '**/target/surefire-reports/TEST-*.xml'
-            }
-        }
-
-        stage('frontend tests') {
-            try {
-                sh "./mvnw com.github.eirslett:frontend-maven-plugin:yarn -Dfrontend.yarn.arguments=test"
-            } catch(err) {
-                throw err
-            } finally {
-                // TODO: what does junit command do?
-                junit '**/target/test-results/karma/TESTS-*.xml'
-            }
-        }
-
-        stage('packaging') {
-            sh "./mvnw package -Pprod -DskipTests"
-            archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
-        }
-
-        stage('fabric8-build') {
-            sh './mvnw package fabric8:build'
         }
 
         stage('Canary Release'){
