@@ -30,16 +30,20 @@ def label = "buildpod.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').rep
 
 mavenNode(mavenImage: 'openjdk:8') {
     container(name: 'maven') {
+
         stage("checkout") {
             checkout scm
         }
+
         stage("clean") {
             sh 'chmod +x mvnw'
             sh './mvnw clean'
         }
+
         stage('install tools') {
             sh './mvnw com.github.eirslett:frontend-maven-plugin:install-node-and-yarn -DnodeVersion=v6.11.1 -DyarnVersion=v0.27.5'
         }
+
         stage('yarn install') {
             sh './mvnw com.github.eirslett:frontend-maven-plugin:yarn'
         }
@@ -71,6 +75,12 @@ mavenNode(mavenImage: 'openjdk:8') {
 
         stage('fabric8-build') {
             sh './mvnw package fabric8:build'
+        }
+
+        stage('Canary Release'){
+            mavenCanaryRelease {
+              version = canaryVersion
+            }
         }
     }
 }
