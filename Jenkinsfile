@@ -23,10 +23,14 @@ try {
 }
 
 def canaryVersion = "${versionPrefix}.${env.BUILD_NUMBER}"
-
 def fabric8Console = "${env.FABRIC8_CONSOLE ?: ''}"
 def utils = new io.fabric8.Utils()
 def label = "buildpod.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').replace('/', '_')
+
+def envStage = utils.environmentNamespace('stage')
+def envProd = utils.environmentNamespace('run')
+def stashName = ""
+def deploy = false
 
 mavenNode(mavenImage: 'openjdk:8') {
     container(name: 'maven') {
@@ -80,6 +84,14 @@ mavenNode(mavenImage: 'openjdk:8') {
         stage('Canary Release'){
             mavenCanaryRelease {
               version = canaryVersion
+            }
+        }
+
+        stage('Integration Testing') {
+            mavenIntegrationTest {
+              environment = 'Test'
+              failIfNoTests = localFailIfNoTests
+              itestPattern = localItestPattern
             }
         }
     }
