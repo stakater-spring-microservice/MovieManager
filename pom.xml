@@ -492,6 +492,7 @@
 
     <build>
         <defaultGoal>spring-boot:run</defaultGoal>
+
         <testResources>
             <testResource>
                 <directory>src/test/resources/</directory>
@@ -500,6 +501,7 @@
                 <directory>src/test/features</directory>
             </testResource>
         </testResources>
+
         <plugins>
 
             <!--
@@ -782,6 +784,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
                 <configuration>
                     <executable>true</executable>
                     <fork>true</fork>
@@ -1041,6 +1044,7 @@
                         <version>${spring-boot.version}</version>
                         <configuration>
                             <executable>true</executable>
+                            <mainClass>com.stakater.moviemanager.MoviemanagerApp</mainClass>
                         </configuration>
                         <executions>
                             <execution>
@@ -1100,12 +1104,14 @@
 
                 </plugins>
             </build>
+
             <properties>
                 <!-- log configuration -->
                 <logback.loglevel>INFO</logback.loglevel>
                 <!-- default Spring profiles -->
                 <spring.profiles.active>prod${profile.swagger}${profile.no-liquibase}</spring.profiles.active>
             </properties>
+
         </profile>
 
         <!-- CC PROFILE -->
@@ -1152,6 +1158,7 @@
                             <executable>true</executable>
                             <fork>true</fork>
                             <addResources>true</addResources>
+                            <mainClass>com.stakater.moviemanager.MoviemanagerApp</mainClass>
                             <!--
                             Enable the line below to have remote debugging of your application on port 5005
                             <jvmArguments>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments>
@@ -1204,6 +1211,7 @@
                     </plugin>
                 </plugins>
             </build>
+
             <properties>
                 <!-- log configuration -->
                 <logback.loglevel>DEBUG</logback.loglevel>
