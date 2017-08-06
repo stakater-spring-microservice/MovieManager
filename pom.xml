@@ -109,8 +109,36 @@
         -->
         <liquibase.version>3.5.3</liquibase.version>
         <javassist.version>3.21.0-GA</javassist.version>
-    </properties>
 
+
+        <!--  Plugin versions copied from
+            https://repo1.maven.org/maven2/org/springframework/boot/spring-boot-dependencies/1.5.4.RELEASE/spring-boot-dependencies-1.5.4.RELEASE.pom
+          -->
+        <build-helper-maven-plugin.version>1.10</build-helper-maven-plugin.version>
+        <exec-maven-plugin.version>1.5.0</exec-maven-plugin.version>
+        <git-commit-id-plugin.version>2.2.2</git-commit-id-plugin.version>
+        <maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
+        <maven-assembly-plugin.version>2.6</maven-assembly-plugin.version>
+        <maven-clean-plugin.version>2.6.1</maven-clean-plugin.version>
+        <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
+        <maven-dependency-plugin.version>2.10</maven-dependency-plugin.version>
+        <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
+        <maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
+        <maven-enforcer-plugin.version>1.4</maven-enforcer-plugin.version>
+        <maven-failsafe-plugin.version>2.18.1</maven-failsafe-plugin.version>
+        <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
+        <maven-invoker-plugin.version>1.10</maven-invoker-plugin.version>
+        <maven-help-plugin.version>2.2</maven-help-plugin.version>
+        <maven-jar-plugin.version>2.6</maven-jar-plugin.version>
+        <maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
+        <maven-resources-plugin.version>2.7</maven-resources-plugin.version>
+        <maven-shade-plugin.version>2.4.3</maven-shade-plugin.version>
+        <maven-site-plugin.version>3.5.1</maven-site-plugin.version>
+        <maven-source-plugin.version>2.4</maven-source-plugin.version>
+        <maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version>
+        <maven-war-plugin.version>2.6</maven-war-plugin.version>
+        <versions-maven-plugin.version>2.2</versions-maven-plugin.version>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -797,19 +825,29 @@
             </plugins>
         </pluginManagement>
     </build>
+
     <profiles>
+
+        <!-- NO LIQUIBASE PROFILE -->
+
         <profile>
             <id>no-liquibase</id>
             <properties>
                 <profile.no-liquibase>,no-liquibase</profile.no-liquibase>
             </properties>
         </profile>
+
+        <!-- NO SWAGGER PROFILE -->
+
         <profile>
             <id>swagger</id>
             <properties>
                 <profile.swagger>,swagger</profile.swagger>
             </properties>
         </profile>
+
+        <!-- WEBPACK PROFILE -->
+
         <profile>
             <id>webpack</id>
             <build>
@@ -844,6 +882,9 @@
                 </plugins>
             </build>
         </profile>
+
+        <!--  DEV PROFILE -->
+
         <profile>
             <id>dev</id>
             <activation>
@@ -865,6 +906,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-war-plugin</artifactId>
+                        <version>${maven-war-plugin.version}</version>
                         <configuration>
                             <warSourceDirectory>src/main/webapp/</warSourceDirectory>
                         </configuration>
@@ -878,6 +920,9 @@
                 <spring.profiles.active>dev${profile.no-liquibase}</spring.profiles.active>
             </properties>
         </profile>
+
+        <!-- PROD PROFILE -->
+
         <profile>
             <id>prod</id>
             <dependencies>
@@ -901,6 +946,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-war-plugin</artifactId>
+                        <version>${maven-war-plugin.version}</version>
                         <configuration>
                             <warSourceDirectory>target/www/</warSourceDirectory>
                         </configuration>
@@ -908,6 +954,7 @@
                     <plugin>
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
+                        <version>${spring-boot.version}</version>
                         <configuration>
                             <executable>true</executable>
                         </configuration>
@@ -1001,6 +1048,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-war-plugin</artifactId>
+                        <version>${maven-war-plugin.version}</version>
                         <configuration>
                             <warSourceDirectory>src/main/webapp/</warSourceDirectory>
                         </configuration>
@@ -1008,6 +1056,7 @@
                     <plugin>
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
+                        <version>${spring-boot.version}</version>
                         <configuration>
                             <executable>true</executable>
                             <fork>true</fork>
