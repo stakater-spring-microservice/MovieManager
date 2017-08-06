@@ -8,6 +8,10 @@
     <packaging>war</packaging>
     <name>Moviemanager</name>
 
+    <!--
+    https://repo1.maven.org/maven2/org/springframework/boot/spring-boot-dependencies/1.5.4.RELEASE/spring-boot-dependencies-1.5.4.RELEASE.pom
+    -->
+
     <properties>
         <argLine>-Djava.security.egd=file:/dev/./urandom -Xmx256m</argLine>
         <assertj.version>3.6.2</assertj.version>
@@ -96,6 +100,15 @@
         <!-- dependency versions -->
         <fabric8.version>2.3.2</fabric8.version>
         <spring-boot.version>1.5.4.RELEASE</spring-boot.version>
+
+        <!-- Note: Although they are defined in one of the base dependency BOM files BUT since they are being referenced
+        inside the plugin section; they are not being resolved. So, I opened
+            https://repo1.maven.org/maven2/org/springframework/boot/spring-boot-dependencies/1.5.4.RELEASE/spring-boot-dependencies-1.5.4.RELEASE.pom
+        and explicitly copied them!
+        If they have been specified in dependencyManagement of parent BOM then this should have worked.
+        -->
+        <liquibase.version>3.5.3</liquibase.version>
+        <javassist.version>3.21.0-GA</javassist.version>
     </properties>
 
 
@@ -668,7 +681,7 @@
                     <dependency>
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-starter-data-jpa</artifactId>
-                        <version>${project.parent.version}</version>
+                        <version>${spring-boot.version}</version>
                     </dependency>
                     <dependency>
                         <groupId>javax.validation</groupId>
