@@ -113,6 +113,12 @@
 
         <!--  Plugin versions copied from
             https://repo1.maven.org/maven2/org/springframework/boot/spring-boot-dependencies/1.5.4.RELEASE/spring-boot-dependencies-1.5.4.RELEASE.pom
+
+            NOTE - Ideally these versions should have been inherited from parent pom BUT wasn't working; as I have two
+            parent BOM's and the fabric8 one might be overriding the stuff.
+            So, I have to explicitly specify them.
+
+            To avoid any surprises or hiccups if you have two BOM's then explicitly define the version of the plugin.
           -->
         <build-helper-maven-plugin.version>1.10</build-helper-maven-plugin.version>
         <exec-maven-plugin.version>1.5.0</exec-maven-plugin.version>
@@ -909,6 +915,8 @@
                         <version>${maven-war-plugin.version}</version>
                         <configuration>
                             <warSourceDirectory>src/main/webapp/</warSourceDirectory>
+                            <!-- REASON https://stackoverflow.com/questions/23114155/spring-boot-without-parent-pom-xml-cannot-generate-war-packaging -->
+                            <failOnMissingWebXml>false</failOnMissingWebXml>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -949,6 +957,8 @@
                         <version>${maven-war-plugin.version}</version>
                         <configuration>
                             <warSourceDirectory>target/www/</warSourceDirectory>
+                            <!-- REASON https://stackoverflow.com/questions/23114155/spring-boot-without-parent-pom-xml-cannot-generate-war-packaging -->
+                            <failOnMissingWebXml>false</failOnMissingWebXml>
                         </configuration>
                     </plugin>
                     <plugin>
