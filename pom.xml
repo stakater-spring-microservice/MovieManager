@@ -854,13 +854,18 @@
                     <images>
                         <image>
                             <name>%g/%a:%v</name>
-                            <alias>%a</alias>
+                            <alias>moviemanager</alias>
                             <build>
                                 <dockerFileDir>${project.basedir}/src/main/docker</dockerFileDir>
                                 <assembly>
                                     <descriptorRef>rootWar</descriptorRef>
                                 </assembly>
                             </build>
+                            <run>
+                                <ports>
+                                    <port>9009:8080</port>
+                                </ports>
+                            </run>
                         </image>
                     </images>
 
