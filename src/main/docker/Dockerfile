@@ -5,9 +5,14 @@ ENV SPRING_OUTPUT_ANSI_ENABLED=ALWAYS \
     JAVA_OPTS=""
 
 # add directly the war
-ADD *.war /app.war
+# ADD *.war /app.war
+
+# In maven/ the files as specified in the <assembly> section is stored
+# and need to be added manually
+COPY maven/ /app.war
 
 EXPOSE 8080
+
 CMD echo "The application will start in ${JHIPSTER_SLEEP}s..." && \
     sleep ${JHIPSTER_SLEEP} && \
     java ${JAVA_OPTS} -Djava.security.egd=file:/dev/./urandom -jar /app.war
