@@ -920,6 +920,14 @@
                         </image>
                     </images>
 
+                    <enricher>
+                        <config>
+                            <spring-boot-health-check>
+                                <context-path>/management</context-path>
+                            </spring-boot-health-check>
+                        </config>
+                    </enricher>
+
                 </configuration>
                 <executions>
                     <execution>
