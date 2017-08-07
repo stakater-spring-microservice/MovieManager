@@ -26,7 +26,7 @@
         <gatling.version>2.2.5</gatling.version>
         <gatling-maven-plugin.version>2.2.4</gatling-maven-plugin.version>
         <hibernate.version>5.2.8.Final</hibernate.version>
-        <hikaricp.version>2.6.0</hikaricp.version>
+        <cp.versionhikari>2.6.0</cp.versionhikari>
         <jacoco-maven-plugin.version>0.7.9</jacoco-maven-plugin.version>
         <java.version>1.8</java.version>
         <jcache.version>1.0.0</jcache.version>
@@ -156,6 +156,7 @@
         <dependency>
             <groupId>io.dropwizard.metrics</groupId>
             <artifactId>metrics-core</artifactId>
+            <version>${dropwizard-metrics.version}</version>
         </dependency>
         <dependency>
             <groupId>io.dropwizard.metrics</groupId>
@@ -185,7 +186,11 @@
         <dependency>
             <groupId>io.dropwizard.metrics</groupId>
             <artifactId>metrics-servlets</artifactId>
+            <version>${dropwizard-metrics.version}</version>
         </dependency>
+
+        <!-- jackson -->
+
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-hibernate5</artifactId>
@@ -207,9 +212,19 @@
             <artifactId>jackson-module-afterburner</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+        </dependency>
+
+        <!-- h2 -->
+
+        <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
         </dependency>
+
+        <!-- -->
+
         <dependency>
             <groupId>org.awaitility</groupId>
             <artifactId>awaitility</artifactId>
@@ -251,6 +266,7 @@
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
+            <version>${cp.versionhikari}</version>
         </dependency>
 
         <dependency>
@@ -285,12 +301,46 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
+            <version>${assertj.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.ehcache</groupId>
             <artifactId>ehcache</artifactId>
         </dependency>
+
+        <!--
+        Hibernate
+        -->
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>xml-apis</groupId>
+                    <artifactId>xml-apis</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.enterprise</groupId>
+                    <artifactId>cdi-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>xml-apis</groupId>
+                    <artifactId>xml-apis</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-jcache</artifactId>
@@ -299,6 +349,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-envers</artifactId>
+            <version>${hibernate.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
