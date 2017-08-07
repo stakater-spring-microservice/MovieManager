@@ -176,10 +176,82 @@ To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`)
 
 ---
 
+## Running app from within container
 
 This will add your current directory as a volume to the container, set the working directory to the volume, and exec 
 you into the container
 
+```
 docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app -it openjdk:8 /bin/bash
+```
+
+First run the container:
+
+```
+docker run --name jhipster -v "$PWD":/home/jhipster/app -v ~/.m2:/home/jhipster/.m2 -v "/var/run/docker.sock:/var/run/docker.sock" -p 8000:8080 -p 9000:9000 -p 3001:3001 -d -t jhipster/jhipster
+
+```
+
+Then open one terminal window and exec into it; and we will run backend in it:
+
+```
+docker exec -it jhipster bash
+
+& then run
+
+./mvnw
+```
+
+Then open another terminal window and exec into it; and we will run frontend in it:
+
+```
+docker container exec -it jhipster bash
+
+& then run
+
+yarn install
+yarn start
+```
+
+Accessing the container
+
+Warning: On Windows, you need to execute the Docker Quick Terminal as Administrator to be able to create symlinks during the `yarn install` step.
+
+The easiest way to log into the running container is by executing following command:
+
+```
+docker container exec -it <container_name> bash
+```
+
+If you copy-pasted the above command to run the container, notice that you have to specify jhipster as the container name:
+
+```
+docker container exec -it jhipster bash
+```
+
+You will log in as the “jhipster” user.
+
+If you want to log in as “root”, as the sudo command isn’t available in Ubuntu Xenial, you need to run:
+
+```
+docker container exec -it --user root jhipster bash
+```
+
+```
+Tip: If you are having issues with Yarn, you can use jhipster --npm, to use NPM instead of Yarn.
+```
+
+Once your application is created, you can run all the normal gulp/bower/maven commands, for example:
+
+```
+./mvnw
+```
+
+Congratulations! You’ve launched your JHipster app inside Docker!
+
+On your host machine, you should be able to :
+
+* Access the running application at http://DOCKER_HOST:8080
+* Get all the generated files inside your shared folder
 
 ---
