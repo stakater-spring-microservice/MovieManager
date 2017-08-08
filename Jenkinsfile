@@ -65,7 +65,6 @@ mavenNode(mavenImage: 'openjdk:8') {
         }
 
         stage('Integration Testing') {
-            sh './mvnw test dependency:tree -DskipTests=true'
             mavenIntegrationTest {
               environment = 'Test'
               failIfNoTests = localFailIfNoTests
