@@ -909,6 +909,13 @@
                             <JAVA_APP_JAR>*.jar</JAVA_APP_JAR>
                         </env>
                     </resources>
+
+                    <enricher>
+                        <excludes>
+                            <exclude>f8-expose</exclude>
+                        </excludes>
+                    </enricher>
+
                 </configuration>
                 <executions>
                     <execution>
