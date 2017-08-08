@@ -903,32 +903,6 @@
                     -->
                     <verbose>true</verbose>
 
-                    <images>
-                        <image>
-                            <name>%g/%a:%v</name>
-                            <alias>moviemanager</alias>
-                            <build>
-                                <dockerFileDir>${project.basedir}/src/main/docker</dockerFileDir>
-                                <assembly>
-                                    <descriptorRef>rootWar</descriptorRef>
-                                </assembly>
-                            </build>
-                            <run>
-                                <ports>
-                                    <port>9009:8080</port>
-                                </ports>
-                            </run>
-                        </image>
-                    </images>
-
-                    <enricher>
-                        <config>
-                            <spring-boot-health-check>
-                                <context-path>/management</context-path>
-                            </spring-boot-health-check>
-                        </config>
-                    </enricher>
-
                 </configuration>
                 <executions>
                     <execution>
