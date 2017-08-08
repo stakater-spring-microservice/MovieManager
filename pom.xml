@@ -921,13 +921,6 @@
                         </image>
                     </images>
 
-                    <resources>
-                        <env>
-                            <!-- Name of the war file -->
-                            <JAVA_APP_JAR>*.jar</JAVA_APP_JAR>
-                        </env>
-                    </resources>
-
                     <enricher>
                         <includes>
                             <include>fmp-controller</include>
