@@ -905,9 +905,11 @@
 
                     <images>
                         <image>
-                            <env>
-                                <JAVA_APP_JAR>*.war</JAVA_APP_JAR>
-                            </env>
+                            <build>
+                                <env>
+                                    <JAVA_APP_JAR>*.war</JAVA_APP_JAR>
+                                </env>
+                            </build>
                         </image>
                     </images>
 
