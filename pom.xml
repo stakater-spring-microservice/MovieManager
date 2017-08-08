@@ -903,51 +903,11 @@
                     -->
                     <verbose>true</verbose>
 
-                    <images>
-                        <image>
-                            <name>%g/%a:%v</name>
-                            <alias>moviemanager</alias>
-                            <build>
-                                <dockerFileDir>${project.basedir}/src/main/docker</dockerFileDir>
-                                <assembly>
-                                    <descriptorRef>rootWar</descriptorRef>
-                                </assembly>
-                            </build>
-                            <run>
-                                <ports>
-                                    <port>9009:8080</port>
-                                </ports>
-                            </run>
-                        </image>
-                    </images>
-
-                    <enricher>
-                        <includes>
-                            <include>fmp-controller</include>
-                            <include>fmp-service</include>
-                            <include>fmp-image</include>
-                            <include>fmp-portname</include>
-                            <include>fmp-ianaservice</include>
-                            <include>fmp-project</include>
-                            <include>fmp-dependency</include>
-                            <include>fmp-pod-annotations</include>
-                            <include>fmp-git</include>
-                            <include>fmp-debug</include>
-                            <include>fmp-merge</include>
-                            <include>fmp-remove-build-annotations</include>
-                            <include>fmp-volume-permission</include>
-                            <include>f8-cd</include>
-                            <include>f8-cd-doc-link</include>
-                            <include>f8-cd-grafana-link</include>
-                            <include>f8-icon</include>
-                            <include>spring-boot-health-check</include>
-                            <include>docker-health-check</include>
-                            <include>f8-prometheus</include>
-                            <include>f8-maven-scm</include>
-                            <include>f8-maven-issue-mgmt</include>
-                            <include>f8-watch</include>
-                        </includes>
-                    </enricher>
+                    <resources>
+                        <env>
+                            <JAVA_APP_JAR>${project.build.finalName}.war</JAVA_APP_JAR >
+                        </env>
+                    </resources>
 
                 </configuration>
                 <executions>
