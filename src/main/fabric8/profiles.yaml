@@ -1,0 +1,13 @@
+- name: digitaldealer-spring-boot-apps
+  generator:
+    includes:
+      - spring-boot
+  enricher:
+    includes:
+      # Default Deployment object
+      - fmp-controller
+      # Add a default service
+      - fmp-service
+    excludes:
+      - f8-icon
+  order: 10

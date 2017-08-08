@@ -897,6 +897,8 @@
                 <artifactId>fabric8-maven-plugin</artifactId>
                 <version>${fabric8.maven.plugin.version}</version>
                 <configuration>
+                    <profile>digitaldealer-spring-boot-apps</profile>
+
                     <!--
                     Boolean attribute for switching on verbose output like the build steps when doing a Docker build.
                     -->
