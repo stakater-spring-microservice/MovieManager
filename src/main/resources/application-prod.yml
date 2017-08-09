@@ -25,7 +25,7 @@ spring:
         # TODO pass it as a k8s secret
         username: root
         # TODO pass it as a k8s secret
-        password:
+        password: password
         hikari:
             data-source-properties:
                 cachePrepStmts: true
