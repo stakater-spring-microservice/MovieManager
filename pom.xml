@@ -1034,6 +1034,8 @@
             </build>
         </profile>
 
+
+
         <!-- PROD PROFILE -->
 
         <profile>
@@ -1140,7 +1142,7 @@
                 <!-- log configuration -->
                 <logback.loglevel>INFO</logback.loglevel>
                 <!-- default Spring profiles -->
-                <spring.profiles.active>prod${profile.swagger}${profile.no-liquibase}</spring.profiles.active>
+                <spring.profiles.active>dev{profile.swagger}${profile.no-liquibase}</spring.profiles.active>
             </properties>
 
         </profile>
