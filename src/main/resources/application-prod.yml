@@ -22,7 +22,9 @@ spring:
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:mysql://localhost:3306/moviemanager?useUnicode=true&characterEncoding=utf8&useSSL=false
+        # TODO pass it as a k8s secret
         username: root
+        # TODO pass it as a k8s secret
         password:
         hikari:
             data-source-properties:
