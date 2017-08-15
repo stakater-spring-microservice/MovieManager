@@ -86,7 +86,7 @@ mavenNode(mavenImage: 'openjdk:8') {
 
 def push(version) {
 
-    sh "git remote set-url origin git@github.com:ahmadiq/MovieMgr.git"
+    sh "git remote set-url origin git@github.com:stakater-spring-microservice/MovieManager.git"
     sh "git config user.email admin@stakater.com"
     sh "git config user.name stakater-release"
 
