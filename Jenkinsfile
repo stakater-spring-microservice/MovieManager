@@ -26,6 +26,7 @@ def canaryVersion = "${versionPrefix}.${env.BUILD_NUMBER}"
 def fabric8Console = "${env.FABRIC8_CONSOLE ?: ''}"
 def utils = new io.fabric8.Utils()
 def label = "buildpod.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').replace('/', '_')
+def gitRepo = "git@github.com:stakater-spring-microservice/MovieManager.git"
 
 def envStage = utils.environmentNamespace('stage')
 def envProd = utils.environmentNamespace('run')
@@ -61,8 +62,8 @@ mavenNode(mavenImage: 'openjdk:8') {
         stage('Canary Release'){
             mavenCanaryRelease {
               version = canaryVersion
+              projectGit = gitRepo
             }
-            push(canaryVersion)
         }
 
         stage('Integration Testing') {
@@ -82,21 +83,4 @@ mavenNode(mavenImage: 'openjdk:8') {
             stash includes: '**/*.yml', name: stashName
         }
     }
-}
-
-def push(version) {
-
-    sh "git remote set-url origin git@github.com:stakater-spring-microservice/MovieManager.git"
-    sh "git config user.email admin@stakater.com"
-    sh "git config user.name stakater-release"
-
-    sh 'chmod 600 /root/.ssh-git/ssh-key'
-    sh 'chmod 600 /root/.ssh-git/ssh-key.pub'
-    sh 'chmod 700 /root/.ssh-git'
-
-
-    sh "git tag -fa v${version} -m 'Release version ${version}'"
-    sh "git push origin v${version}"
-    sh "git checkout -b ${version}"
-    sh "git push origin ${version}"
 }
