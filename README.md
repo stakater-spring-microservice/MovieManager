@@ -189,6 +189,9 @@ IdentityFile /root/.ssh-git/ssh-key
 StrictHostKeyChecking no
 ```
 
+### 3. Hubot Config
+In Fabric8 menu Config -> hubot-slack, specify the value of Hubot slack token for integration with Slack
+
 ---
 
 ## Running app from within container
