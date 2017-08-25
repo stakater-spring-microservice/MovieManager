@@ -174,6 +174,24 @@ To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`)
 [Leaflet]: http://leafletjs.com/
 [DefinitelyTyped]: http://definitelytyped.org/
 
+
+## CD with Fabric8
+
+### 1. Jenkins credentials
+Add credentials in Jenkins
+
+### 2. Jenkins ssh config
+In Fabric8 menu Secrets -> jenkins-ssh-config, add the following in the Config key:
+```
+Host github.com
+User git
+IdentityFile /root/.ssh-git/ssh-key
+StrictHostKeyChecking no
+```
+
+### 3. Hubot Config
+In Fabric8 menu Config -> hubot-slack, specify the value of Hubot slack token for integration with Slack
+
 ---
 
 ## Running app from within container

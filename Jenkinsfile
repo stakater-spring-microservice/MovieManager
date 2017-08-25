@@ -26,6 +26,7 @@ def canaryVersion = "${versionPrefix}.${env.BUILD_NUMBER}"
 def fabric8Console = "${env.FABRIC8_CONSOLE ?: ''}"
 def utils = new io.fabric8.Utils()
 def label = "buildpod.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').replace('/', '_')
+def gitRepo = "git@github.com:stakater-spring-microservice/MovieManager.git"
 
 def envStage = utils.environmentNamespace('stage')
 def envProd = utils.environmentNamespace('run')
@@ -70,6 +71,29 @@ mavenNode(mavenImage: 'openjdk:8') {
               failIfNoTests = localFailIfNoTests
               itestPattern = localItestPattern
             }
+        }
+
+        stage('SonarQube analysis') {
+          withSonarQubeEnv('sonarqube') {
+            sh './mvnw compile'
+            // requires SonarQube Scanner for Maven 3.2+
+            sh "./mvnw -Dsonar.host.url=${env.SONAR_HOST_URL} org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar"
+          }
+        }
+
+        stage('Release') {
+          timeout(time: 1, unit: 'HOURS') { // Just in case something goes wrong, pipeline will be killed after a timeout
+            def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
+            if (qg.status != 'OK') {
+              error "Pipeline aborted due to quality gate failure: ${qg.status}"
+            }
+            else {
+              //push release git branch and tag and nexus repo
+              gitRelease {
+                project = gitRepo
+              }
+            }
+          }
         }
 
         stage('Rollout to Stage') {
